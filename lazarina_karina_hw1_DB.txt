@@ -158,10 +158,18 @@ select a.Sum,
        a.CreditState
 from application a
 group by idApplication
-having avg(a.Sum)<a.Sum ;
+having a.Sum > (select avg(sum) from application);
 
 # /*Знайти клієнтів, які є з того самого міста, що і клієнт, який взяв найбільшу кількість кредитів*/
-
+# select FirstName,
+#        LastName,
+#        Age,
+#        Sum,
+#        DepartmentCity,
+#        count(idApplication)
+#        from application a,client c,department d
+# where d.idDepartment = c.Department_idDepartment and c.idClient = a.Client_idClient
+# group by idClient;
 
 # #місто чувака який набрав найбільше кредитів
 select c.City,
@@ -173,3 +181,5 @@ group by idClient order by count desc limit 1;
 #
 # set sql_safe_updates = 0;
 # set sql_safe_updates = 1;
+select count(a.idApplication) as count  from application a
+group by a.idApplication order by count desc limit 1;
